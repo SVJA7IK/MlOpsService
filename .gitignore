@@ -3,8 +3,5 @@
 /.venv
 /.vscode
 **/__pycache__
-**.xlsx
-**.pkl
-*.prof
-.coverage
-/htmlcov
+/catboost_info
+
