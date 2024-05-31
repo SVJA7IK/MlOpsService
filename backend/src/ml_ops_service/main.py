@@ -15,7 +15,7 @@ SAMPLE_SUBMISSION_FILE_NAME: Final = "sample_submission.csv"
 config = config_loader()
 
 model = cb.CatBoostClassifier()
-model.load_model(config.model_path)
+model.load_model(config.path_to_model)
 
 
 def make_prediction(model: cb.CatBoostClassifier, input_file: BytesIO) -> BytesIO:

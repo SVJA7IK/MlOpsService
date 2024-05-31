@@ -3,7 +3,7 @@ services:
     image: backend:latest
     build: ./backend
     environment:
-      MODEL_PATH: /models/model.cbm
+      PATH_TO_MODEL: /models/model.cbm
     volumes:
       - ./backend/models:/models
   frontend:
