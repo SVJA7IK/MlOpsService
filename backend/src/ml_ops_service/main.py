@@ -1,10 +1,10 @@
 from io import BytesIO
-from typing import Final
+from typing import Annotated, Final
 
 import catboost as cb
 import pandas as pd
 import uvicorn
-from fastapi import FastAPI, UploadFile
+from fastapi import FastAPI, File
 from fastapi.responses import StreamingResponse
 
 SAMPLE_SUBMISSION_FILE_NAME: Final = "sample_submission.csv"
@@ -39,9 +39,9 @@ app = FastAPI(title="Ml Ops Service Backend")
 
 
 @app.post("/uploadfile/")
-async def create_upload_file(file: UploadFile) -> StreamingResponse:
+async def create_upload_file(file: Annotated[bytes, File()]) -> StreamingResponse:
     return StreamingResponse(
-        make_prediction(model, BytesIO(await file.read())),
+        make_prediction(model, BytesIO(file)),
         media_type="text/csv",
         headers={
             "Content-Disposition": f"attachment; filename={SAMPLE_SUBMISSION_FILE_NAME}",
