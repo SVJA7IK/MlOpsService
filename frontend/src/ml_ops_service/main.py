@@ -45,4 +45,4 @@ app.mount("/", StaticFiles(directory="static", html=True), name="static")
 
 
 if __name__ == "__main__":
-    uvicorn.run("main:app", port=3000)
+    uvicorn.run("main:app", host="0.0.0.0", port=3000)  # noqa: S104

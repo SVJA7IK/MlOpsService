@@ -55,4 +55,5 @@ async def create_upload_file(file: Annotated[bytes, File()]) -> StreamingRespons
 
 
 if __name__ == "__main__":
-    uvicorn.run("main:app", port=5000)
+    uvicorn.run("main:app", host="0.0.0.0", port=5000)  # noqa: S104
+
