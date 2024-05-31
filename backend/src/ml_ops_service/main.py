@@ -1,10 +1,13 @@
 from io import BytesIO
+from typing import Final
 
 import catboost as cb
 import pandas as pd
 import uvicorn
 from fastapi import FastAPI, UploadFile
 from fastapi.responses import StreamingResponse
+
+SAMPLE_SUBMISSION_FILE_NAME: Final = "sample_submission.csv"
 
 model = cb.CatBoostClassifier()
 model.load_model("./models/model.cbm")
@@ -19,7 +22,7 @@ def make_prediction(model: cb.CatBoostClassifier, input_file: BytesIO) -> BytesI
 
     # Сохранение сабмита
     input_file_data[cat_features] = input_file_data[cat_features].fillna("пропуск")
-    submit_pool = cb.Pool(input_file, cat_features=cat_features)
+    submit_pool = cb.Pool(input_file_data, cat_features=cat_features)
 
     sample = pd.DataFrame(index=input_file_data.index)
 
@@ -40,6 +43,9 @@ async def create_upload_file(file: UploadFile) -> StreamingResponse:
     return StreamingResponse(
         make_prediction(model, BytesIO(await file.read())),
         media_type="text/csv",
+        headers={
+            "Content-Disposition": f"attachment; filename={SAMPLE_SUBMISSION_FILE_NAME}",
+        },
     )
 
 

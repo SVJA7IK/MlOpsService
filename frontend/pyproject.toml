@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "mlopsservice"
+version = "0.1.0"
+description = ""
+authors = ["'Святослав' <swja7ik@mail.ru>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+fastapi = "^0.111.0"
+aiohttp = "^3.9.5"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

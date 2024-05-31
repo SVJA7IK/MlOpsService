@@ -1,0 +1,43 @@
+namespace-packages = ["src/ml_ops_service"]
+src = ["src"]
+target-version = "py312"
+line-length = 120
+include = ["src/**/*.py", "tests/**/*.py"]
+select = ["ALL"]
+ignore = [
+  "ANN",
+  "D",
+  "TD002",
+  "TD003",
+  "TRY003",
+  "FIX002",
+  "C408",
+  "TCH002",
+  "TID252",
+  "UP007",
+  "RUF001",
+  "RUF002",
+  "RUF003",
+  "DTZ003",
+  "ARG001",
+  "ERA001",
+  "S311",
+  "INP001",
+  "DTZ005",
+  "TCH001",
+  "TCH003",
+  "PLR2004",
+  "PLR0913",
+  "S105",
+  "EM101",
+]
+
+[lint]
+ignore-init-module-imports = true
+allowed-confusables = ["−", "ρ", "о", "с"]
+
+[lint.extend-per-file-ignores]
+"tests/**/*.py" = [ "S101", "S311", "SLF001" ]
+
+[lint.isort]
+known-first-party = ["queuemodels", "queues"]
