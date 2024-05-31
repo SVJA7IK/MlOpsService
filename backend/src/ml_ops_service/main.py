@@ -7,10 +7,15 @@ import uvicorn
 from fastapi import FastAPI, File
 from fastapi.responses import StreamingResponse
 
+from ml_ops_service.config import config_loader
+
 SAMPLE_SUBMISSION_FILE_NAME: Final = "sample_submission.csv"
 
+
+config = config_loader()
+
 model = cb.CatBoostClassifier()
-model.load_model("./models/model.cbm")
+model.load_model(config.model_path)
 
 
 def make_prediction(model: cb.CatBoostClassifier, input_file: BytesIO) -> BytesIO:

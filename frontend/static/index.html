@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Predictor</title>
+        <style>
+            body {
+                font-family: sans-serif;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                min-height: 100vh;
+                background-color: #f4f4f4;
+                overflow: hidden; /* Скрываем полосы прокрутки */
+            }
+
+            .container {
+                background-color: #fff;
+                padding: 30px;
+                border-radius: 5px;
+                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+                width: 400px; /* Установка фиксированной ширины */
+            }
+
+            h1 {
+                text-align: center;
+                margin-bottom: 20px;
+                color: #333;
+            }
+
+            input[type="file"] {
+                display: block;
+                margin: 0 auto;
+                padding: 10px;
+                border: 1px solid #ccc;
+                border-radius: 4px;
+                background-color: #eee;
+                font-size: 16px;
+                cursor: pointer;
+                width: 90%; /* Занимает 90% ширины формы */
+                text-align: center;
+                margin-bottom: 10px; /* Добавим отступ снизу */
+            }
+
+            input[type="submit"] {
+                background-color: #4CAF50;
+                color: white;
+                padding: 10px 20px;
+                border: none;
+                border-radius: 4px;
+                cursor: pointer;
+                font-size: 16px;
+                margin-top: 10px; /* Добавим отступ сверху */
+                display: block;
+                margin: 0 auto;
+                width: 90%; /* Занимает 90% ширины формы */
+            }
+
+            input[type="submit"]:hover {
+                background-color: #45a049;
+            }
+
+            .notification {
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -150%); /* Изменяем начальное положение */
+                background-color: #fff;
+                padding: 20px;
+                border-radius: 5px;
+                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+                display: none; /* Сначала скрыто */
+                z-index: 100; /* Поверх других элементов */
+                transition: transform 0.3s ease, opacity 0.3s ease; /* Добавляем анимацию */
+                opacity: 0; /* Скрываем по умолчанию */
+            }
+
+            .notification.show {
+                transform: translate(-50%, -50%); /* Конечное положение */
+                opacity: 1; /* Делаем видимым */
+            }
+
+            .notification-message {
+                margin-bottom: 10px;
+            }
+
+            .notification-close {
+                display: block;
+                margin: 0 auto;
+                padding: 10px 20px;
+                background-color: #f44336;
+                color: white;
+                border: none;
+                border-radius: 4px;
+                cursor: pointer;
+                font-size: 16px;
+            }
+
+            .notification-close:hover {
+                background-color: #d32f2f;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <h1>Загрузка файла</h1>
+            <form action='/uploadfile' enctype='multipart/form-data' method='post'>
+                <input name='file' type='file'>
+                <input type='submit' value='Загрузить'>
+            </form>
+
+            <div class="notification" id="notification">
+                <div class="notification-message">Ожидайте начала скачивания файла. Это может занять несколько минут</div>
+                <button class="notification-close" onclick="closeNotification()">Закрыть</button>
+            </div>
+        </div>
+
+        <script>
+            function showNotification() {
+                const notification = document.getElementById("notification");
+                notification.style.display = "block";
+                notification.classList.add("show"); // Добавляем класс для анимации
+            }
+
+            function closeNotification() {
+                const notification = document.getElementById("notification");
+                notification.classList.remove("show"); // Удаляем класс для анимации
+                setTimeout(() => {
+                    notification.style.display = "none";
+                }, 300); // Ожидаем завершения анимации, затем скрываем
+            }
+
+            // Вызов showNotification() после отправки формы
+            document.querySelector('form').addEventListener('submit', showNotification);
+        </script>
+    </body>
+    </html>

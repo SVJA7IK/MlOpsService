@@ -5,7 +5,8 @@ import aiohttp
 import uvicorn
 from config import Config
 from fastapi import FastAPI, HTTPException, UploadFile, status
-from fastapi.responses import HTMLResponse, StreamingResponse
+from fastapi.responses import StreamingResponse
+from fastapi.staticfiles import StaticFiles
 
 SAMPLE_SUBMISSION_FILE_NAME: Final = "sample_submission.csv"
 
@@ -40,17 +41,7 @@ async def upload(file: UploadFile):
     # fmt: on
 
 
-@app.get("/")
-async def main():
-    content = """
-    <body>
-    <form action='/uploadfile' enctype='multipart/form-data' method='post'>
-    <input name='file' type='file'>
-    <input type='submit'>
-    </form>
-    </body>
-    """
-    return HTMLResponse(content=content)
+app.mount("/", StaticFiles(directory="static", html=True), name="static")
 
 
 if __name__ == "__main__":
