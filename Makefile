@@ -1,5 +1,5 @@
-.PHONY: biuld
-start:
+.PHONY: build
+build:
 	docker compose build
 
 .PHONY: start
